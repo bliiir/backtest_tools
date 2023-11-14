@@ -75,10 +75,10 @@ class ExchangeDataManager:
            Raises:
                NotImplementedError: if the exchange is unsupported
         """
-        self.exchange_name = exchange_name.lower()
+        self.exchange_name = exchange_name
         self.path_download = path_download
         try:
-            self.exchange_dict = ExchangeDataManager.CCXT_EXCHANGES[self.exchange_name]
+            self.exchange_dict = ExchangeDataManager.CCXT_EXCHANGES[self.exchange_name.lower()]
         except Exception:
             raise NotImplementedError(
                 f"L'échange {self.exchange_name} n'est pas supporté"
@@ -123,7 +123,7 @@ class ExchangeDataManager:
         self,
         coins,
         intervals,
-        start_date="2017-01-01 00:00:00",
+        start_date="2018-01-01 00:00:00",
         end_date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     ) -> None:
         """This method download the market data between 2 dates
@@ -154,7 +154,7 @@ class ExchangeDataManager:
           
             for coin in coins:
                 print(
-                    f"\tRécupération pour la paire {coin} en timeframe {interval} sur l'exchange {self.exchange_name}..."
+                    f"\tRecovery for the pair {coin} in timeframe {interval} on the exchange {self.exchange_name}..."
                 )
 
                 file_path = f"{self.path_data}/{interval}/"
@@ -206,9 +206,9 @@ class ExchangeDataManager:
                                 path_or_buf=f, header=flag_header[1], index=False
                             )
                     else:
-                        print(f"\tPas de données pour {coin} en {interval} sur cette période")
+                        print(f"\tNo data for {coin} in {interval} over this period")
                 else:
-                    print("\tDonnées déjà récupérées")
+                    print("\tData already recovered")
 
                 #print("\033[H\033[J", end="")
 
